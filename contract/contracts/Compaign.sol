@@ -3,6 +3,14 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract Campaign {
+
+  struct Request {
+    string description;
+    uint value;
+    address recipient;
+    bool completed;
+  }
+
   address public owner;
   uint256 public minimumContribution;
   address[] public approvers;
