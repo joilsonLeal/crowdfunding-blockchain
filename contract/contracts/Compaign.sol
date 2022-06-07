@@ -11,6 +11,7 @@ contract Campaign {
     bool completed;
   }
 
+  Request[] public requests;
   address public owner;
   uint256 public minimumContribution;
   address[] public approvers;
@@ -32,7 +33,23 @@ contract Campaign {
     _;
   }
 
+  modifier restricted() {
+    require(msg.sender == owner, "Must be the owner to call this function!");
+    _;
+  }
+
   function contribute() public payable contribution {
     approvers.push(msg.sender);
+  }
+
+  function createRequest(string memory description, uint value, address recipient) 
+    public restricted {
+      Request memory newRequest = Request({
+        description: description,
+        value: value,
+        recipient: recipient,
+        completed: false
+      });
+      requests.push(newRequest);
   }
 }
