@@ -14,7 +14,7 @@ contract Campaign {
   Request[] public requests;
   address public owner;
   uint256 public minimumContribution;
-  address[] public approvers;
+  mapping(address => bool) public approvers;
 
   constructor(uint256 minimum) {
     owner = msg.sender;
@@ -39,7 +39,7 @@ contract Campaign {
   }
 
   function contribute() public payable contribution {
-    approvers.push(msg.sender);
+    approvers[msg.sender] = true;
   }
 
   function createRequest(string memory description, uint value, address recipient) 
