@@ -8,10 +8,14 @@ contract Campaign {
     string description;
     uint value;
     address recipient;
-    bool completed;
+    bool complete;
+    uint approvalCount;
+    mapping(address => bool) approvals;
   }
 
-  Request[] public requests;
+  uint public numRequests;
+  mapping (uint => Request) requests;
+
   address public owner;
   uint256 public minimumContribution;
   mapping(address => bool) public approvers;
@@ -44,12 +48,11 @@ contract Campaign {
 
   function createRequest(string memory description, uint value, address recipient) 
     public restricted {
-      Request memory newRequest = Request({
-        description: description,
-        value: value,
-        recipient: recipient,
-        completed: false
-      });
-      requests.push(newRequest);
+      Request storage r = requests[numRequests++];
+      r.description = description;
+      r.value = value;
+      r.recipient = recipient;
+      r.complete = false;
+      r.approvalCount = 0;
   }
 }
