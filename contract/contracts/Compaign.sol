@@ -14,7 +14,7 @@ contract Campaign {
   }
 
   uint public numRequests;
-  mapping (uint => Request) requests;
+  mapping (uint => Request) public requests;
 
   address public owner;
   uint256 public minimumContribution;
