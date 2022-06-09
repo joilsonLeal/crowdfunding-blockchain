@@ -55,4 +55,14 @@ contract Campaign {
       r.complete = false;
       r.approvalCount = 0;
   }
+
+  function approveRequest(uint index) public {
+    Request storage request = requests[index];
+
+    require(approvers[msg.sender], "You cannot approve this request.");
+    require(!request.approvals[msg.sender], "You have already approved this request.");
+    
+    request.approvals[msg.sender] = true;
+    request.approvalCount++;
+  }
 }
