@@ -19,6 +19,7 @@ contract Campaign {
   address public owner;
   uint256 public minimumContribution;
   mapping(address => bool) public approvers;
+  uint public approversCount;
 
   constructor(uint256 minimum) {
     owner = msg.sender;
@@ -44,6 +45,7 @@ contract Campaign {
 
   function contribute() public payable contribution {
     approvers[msg.sender] = true;
+    approversCount++;
   }
 
   function createRequest(string memory description, uint value, address recipient) 
@@ -64,5 +66,15 @@ contract Campaign {
     
     request.approvals[msg.sender] = true;
     request.approvalCount++;
+  }
+
+  function finalizeRequest(uint index) public restricted {
+    Request storage request = requests[index];
+
+    require(request.approvalCount > (approversCount / 2), "You must have at least 20% approval to make this request.");
+    require(!request.complete, "Request has already been completed.");
+    
+    request.complete = true;
+    payable (request.recipient).transfer(request.value);
   }
 }
