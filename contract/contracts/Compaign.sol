@@ -2,6 +2,19 @@
 pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/utils/Strings.sol";
 
+contract CampaignFactory {
+  address[] public deployedCampaigns;
+
+  function createCampaign(uint minimumContribution) public {
+    address newCampaign = (address) (new Campaign(minimumContribution, msg.sender));
+    deployedCampaigns.push(newCampaign);
+  }
+
+  function getDeployedCampaigns() public view returns (address[] memory) {
+    return deployedCampaigns;
+  }
+}
+
 contract Campaign {
 
   struct Request {
@@ -21,8 +34,8 @@ contract Campaign {
   mapping(address => bool) public approvers;
   uint public approversCount;
 
-  constructor(uint256 minimum) {
-    owner = msg.sender;
+  constructor(uint256 minimum, address creator) {
+    owner = creator;
     minimumContribution = minimum;
   }
 
