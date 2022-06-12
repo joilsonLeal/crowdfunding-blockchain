@@ -65,7 +65,6 @@ describe("Campaign Tests", () => {
       });
       assert(false);
     } catch (e) {
-      // if (e instanceof AssertionError) assert(false);
       assert.ok(e);
     }
   });
