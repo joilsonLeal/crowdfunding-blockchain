@@ -87,7 +87,7 @@ contract Campaign {
         Request storage request = requests[index];
 
         require(
-            request.approvalCount > (approversCount / 2),
+            request.approvalCount >= (approversCount / 2),
             "You must have at least 20% approval to make this request."
         );
         require(!request.complete, "Request has already been completed.");
