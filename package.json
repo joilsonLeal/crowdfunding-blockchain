@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cd contract && npm run test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -13,6 +13,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "mocha": "^9.1.2"
+  },
   "bugs": {
     "url": "https://github.com/joilsonLeal/crowdfunding-blockchain/issues"
   },
