@@ -7,7 +7,6 @@ function CommonLayout(props) {
     <Container>
       <Header />
       {props.children}
-      <h1>footer</h1>
     </Container>
   );
 }
