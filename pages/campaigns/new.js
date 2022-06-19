@@ -2,37 +2,37 @@ import React, { Component } from "react";
 import { Form, Button, Input, Message } from "semantic-ui-react";
 
 import Layout from "../../components/Layout";
-import factory from '../../ethereum/factory';
-import web3 from '../../ethereum/web3';
-import { Router } from '../../routes';
+import factory from "../../ethereum/factory";
+import web3 from "../../ethereum/web3";
+import { Router } from "../../routes";
 
 class CampaignNew extends Component {
   state = {
     minimumContribution: "",
     errorMessage: "",
-    loading: false
+    loading: false,
   };
 
   onSubmit = async (event) => {
     event.preventDefault();
 
-    this.setState({ loading: true, errorMessage: '' });
+    this.setState({ loading: true, errorMessage: "" });
 
     try {
       const accounts = await web3.eth.getAccounts();
       await factory.methods
         .createCampaign(this.state.minimumContribution)
-        .send({ 
+        .send({
           from: accounts[0],
         });
 
-        Router.pushRoute('/');
+      Router.pushRoute("/");
     } catch (error) {
-      this.setState({ errorMessage: error.message })
+      this.setState({ errorMessage: error.message });
     }
 
     this.setState({ loading: false });
-  }
+  };
 
   render() {
     return (
@@ -54,7 +54,7 @@ class CampaignNew extends Component {
             />
           </Form.Field>
 
-          <Message error header="Opps!" content={this.state.errorMessage}/>
+          <Message error header="Opps!" content={this.state.errorMessage} />
 
           <Button loading={this.state.loading} primary>
             Create
